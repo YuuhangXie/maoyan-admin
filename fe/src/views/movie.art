@@ -24,7 +24,7 @@
             </div>
         </div>
         <div class="card-header d-flex align-items-center">
-            <h3 class="h4">热门电影</h3>
+            <input type="button" value="添加" class="btn btn-success movie-add">
             <input id="inlineFormInputGroup" type="text" placeholder="Search Film" class="mr-3 form-control">
         </div>
         <div class="card-body">
@@ -43,18 +43,21 @@
                 <tbody>
                 {{each list}}
                 <tr>
-                    <th scope="row"><input id="checkboxCustom1" type="checkbox"  value="" class="checkbox-template movieList-btn"></th>
+                    <th scope="row"><input id="checkboxCustom1" type="checkbox" data-id="{{$value._id}}"  value="" class="checkbox-template movieList-btn"></th>
                     <td>{{$value.id}}</td>
                     <th scope="row">{{$value.nm}}</th>
                     <td>{{$value.star}}</td>
                     <td>{{$value.rt}}</td>
-                    <td><input type="button" value="修改" class="btn btn-primary"></td>
+                    <td><input type="button" data-id="{{$value._id}}" value="修改" class="btn btn-primary edit-btn"></td>
                 </tr>
                 {{/each}}
+                {{if list.length == 0}}
+                暂无数据.
+                {{/if}}
                 </tbody>
             </table>
             <div class="func-bar">
-            <input type="button" value="删除" class="btn btn-danger">
+            <input type="button" value="删除" class="btn btn-danger delete-btn">
             <ul id="page"></ul>
             </div>
             </div>

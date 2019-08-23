@@ -20,6 +20,8 @@ router.use((req, res, next) => {
 
 router.route('/', home.render)
 router.route('/movie', movie.render)
+router.route('/movieAdd', movie.add)
+router.route('/movieEdit', movie.edit)
 
 // 将页面导航到 /, 默认route方法不具备自动导航的功能
 router.redirect('/movie')

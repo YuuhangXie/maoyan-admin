@@ -76,3 +76,13 @@ table td {
 .card-header {
     justify-content: space-between;
 }
+
+.movie-add {
+    width: 58px;
+    height: 38px;
+}
+
+.add-movie-block {
+    width: 504px;
+    margin: 0 auto;
+}

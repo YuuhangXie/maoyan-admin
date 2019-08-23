@@ -1,0 +1,55 @@
+<!-- Page Header-->
+<header class="page-header">
+<div class="container-fluid">
+    <h2 class="no-margin-bottom">Tables</h2>
+</div>
+</header>
+<!-- Breadcrumb-->
+<div class="breadcrumb-holder container-fluid">
+<ul class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/#/">Home</a></li>
+    <li class="breadcrumb-item active">MovieLists            </li>
+</ul>
+</div>
+<section class="tables" style="padding-top:20px;">   
+<div class="container-fluid" style="padding-left:20px;">
+    <div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+        <div class="card-close">
+            <div class="dropdown">
+            <button type="button" id="closeCard2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-ellipsis-v"></i></button>
+            <div aria-labelledby="closeCard2" class="dropdown-menu dropdown-menu-right has-shadow"><a href="javascript:void(0)" class="dropdown-item remove"> <i class="fa fa-times"></i>Close</a></div>
+            </div>
+        </div>
+        <div class="card-header d-flex align-items-center">
+            <h3 class="h4">添加影片信息</h3>
+        </div>
+        <div class="card-body add-movie-block">
+            <form id="movie-save">
+            <div class="form-group">
+                <label class="form-control-label"><strong>影片ID</strong></label>
+                <input type="text" id="id" name="id" placeholder="影片ID" class="form-control">
+            </div>
+            <div class="form-group">
+                <label class="form-control-label"><strong>影片名称</strong></label>
+                <input type="text" id="nm" name="nm" placeholder="影片名称" class="form-control">
+            </div>
+            <div class="form-group">
+                <label class="form-control-label"><strong>主演</strong></label>
+                <input type="text" id="star" name="star" placeholder="主演" class="form-control">
+            </div>
+            <div class="form-group">
+                <label class="form-control-label"><strong>上映日期</strong></label>
+                <input type="text" id="rt" name="rt" placeholder="上映日期" class="form-control">
+            </div>
+            <div class="form-group">       
+                <button class="btn btn-success movie-add-submit">提交</button>
+            </div>
+            </form>
+        </div>
+        </div>
+    </div>
+    </div>
+</div>
+</section>
