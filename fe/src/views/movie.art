@@ -1,0 +1,66 @@
+
+<!-- Page Header-->
+<header class="page-header">
+<div class="container-fluid">
+    <h2 class="no-margin-bottom">Tables</h2>
+</div>
+</header>
+<!-- Breadcrumb-->
+<div class="breadcrumb-holder container-fluid">
+<ul class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/#/">Home</a></li>
+    <li class="breadcrumb-item active">MovieLists            </li>
+</ul>
+</div>
+<section class="tables" style="padding-top:20px;">   
+<div class="container-fluid" style="padding-left:20px;">
+    <div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+        <div class="card-close">
+            <div class="dropdown">
+            <button type="button" id="closeCard1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-ellipsis-v"></i></button>
+            <div aria-labelledby="closeCard1" class="dropdown-menu dropdown-menu-right has-shadow"><a href="#" class="dropdown-item remove"> <i class="fa fa-times"></i>Close</a><a href="#" class="dropdown-item edit"> <i class="fa fa-gear"></i>Edit</a></div>
+            </div>
+        </div>
+        <div class="card-header d-flex align-items-center">
+            <h3 class="h4">热门电影</h3>
+            <input id="inlineFormInputGroup" type="text" placeholder="Search Film" class="mr-3 form-control">
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th><input id="checkboxCustom1" type="checkbox"  value="" class="checkbox-template movieList-btn-all"></th>
+                    <th>ID</th>
+                    <th>影片名称</th>
+                    <th>主演</th>
+                    <th>上映日期</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{each list}}
+                <tr>
+                    <th scope="row"><input id="checkboxCustom1" type="checkbox"  value="" class="checkbox-template movieList-btn"></th>
+                    <td>{{$value.id}}</td>
+                    <th scope="row">{{$value.nm}}</th>
+                    <td>{{$value.star}}</td>
+                    <td>{{$value.rt}}</td>
+                    <td><input type="button" value="修改" class="btn btn-primary"></td>
+                </tr>
+                {{/each}}
+                </tbody>
+            </table>
+            <div class="func-bar">
+            <input type="button" value="删除" class="btn btn-danger">
+            <ul id="page"></ul>
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    </div>
+</div>
+</section>

@@ -1,0 +1,10 @@
+{{each list}}
+<tr>
+    <th scope="row"><input id="checkboxCustom1" type="checkbox"  value="" class="checkbox-template movieList-btn"></th>
+    <td>{{$value.id}}</td>
+    <th scope="row">{{$value.nm}}</th>
+    <td>{{$value.star}}</td>
+    <td>{{$value.rt}}</td>
+    <td><input type="button" value="修改" class="btn btn-primary"></td>
+</tr>
+{{/each}}
