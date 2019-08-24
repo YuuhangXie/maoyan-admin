@@ -71,7 +71,7 @@ module.exports = {
     },
 
     async delete(req, res, next) {
-        let data = movieListModel.delete(req.body._id)
+        let data = await movieListModel.delete(req.body._id)
         if (data) {
             res.render('succ', {
                 data: JSON.stringify({

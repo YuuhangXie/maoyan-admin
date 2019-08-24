@@ -29,19 +29,19 @@
             <form id="movie-save">
             <div class="form-group">
                 <label class="form-control-label"><strong>影片ID</strong></label>
-                <input type="text" id="id" name="id" placeholder="影片ID" class="form-control">
+                <input type="text" id="id" name="id" value="{{id}}" placeholder="影片ID" class="form-control">
             </div>
             <div class="form-group">
                 <label class="form-control-label"><strong>影片名称</strong></label>
-                <input type="text" id="nm" name="nm" placeholder="影片名称" class="form-control">
+                <input type="text" id="nm" name="nm" value="{{nm}}" placeholder="影片名称" class="form-control">
             </div>
             <div class="form-group">
                 <label class="form-control-label"><strong>主演</strong></label>
-                <input type="text" id="star" name="star" placeholder="主演" class="form-control">
+                <input type="text" id="star" name="star" value="{{star}}" placeholder="主演" class="form-control">
             </div>
             <div class="form-group">
                 <label class="form-control-label"><strong>上映日期</strong></label>
-                <input type="text" id="rt" name="rt" placeholder="上映日期" class="form-control">
+                <input type="text" id="rt" name="rt" value="{{rt}}" placeholder="上映日期" class="form-control">
             </div>
             <div class="form-group">       
                 <button class="btn btn-success movie-add-submit">提交</button>

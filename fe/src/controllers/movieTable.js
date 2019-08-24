@@ -1,6 +1,7 @@
 import movieView from '../views/movie.art'
 import movieListView from '../views/movieList.art'
 import movieAddView from '../views/movieAdd.art'
+import movieEditView from '../views/movieEdit.art'
 
 import SigninController from './sign'
 import movieList from './users'
@@ -24,7 +25,7 @@ function handleBtn(e) {
 }
 
 // 添加分页
-function addPaginator(dataList) {
+function addPaginator(dataList, res) {
     $('#page').bootstrapPaginator({
         bootstrapMajorVersion: 3, //bootstrap版本
         currentPage: 1, //当前页码
@@ -49,14 +50,42 @@ function addPaginator(dataList) {
             let dataList = await movieList.getMovieList(page, 10)
             console.log(dataList)
             $('#router-view tbody').html(movieListView({
-                    list: dataList.data
-                }))
-                // 每次渲染添加事件
+                list: dataList.data
+            }))
+
+            // 每次渲染添加事件
             $('.movieList-btn').on('click', handleBtn.bind(this))
             $('.movieList-btn-all').prop('checked', false)
             $('.movieList-btn-all').on('click', handleBtnAll.bind(this))
+
+            // 点击编辑事件
+            $('.edit-btn').on('click', function() {
+                res.go('/movieEdit', {
+                    _id: $(this).attr('data-id')
+                })
+            })
         }
     });
+}
+
+// 删除事件
+function removeMovie(res) {
+    $('.movieList-btn').each(function() {
+        if ($(this).prop('checked')) {
+            $.ajax({
+                url: '/api/movie/delete',
+                type: 'DELETE',
+                data: {
+                    _id: $(this).attr('data-id')
+                },
+                success(result) {
+                    console.log(result)
+                }
+            })
+        }
+    })
+
+    res.go('/movie?_=' + Date.now())
 }
 
 export default {
@@ -79,12 +108,25 @@ export default {
         $('.movieList-btn-all').on('click', handleBtnAll.bind(this))
 
         // 添加分页
-        addPaginator.call(this, dataList)
+        addPaginator.call(this, dataList, res)
 
         // 点击添加事件
         $('.movie-add').on('click', function() {
             res.go('/movieAdd')
         })
+
+        // 点击编辑事件
+        $('.edit-btn').on('click', function() {
+            res.go('/movieEdit', {
+                _id: $(this).attr('data-id')
+            })
+        })
+
+        // 点击删除事件
+        $('.delete-btn').on('click', removeMovie.bind(this, res))
+
+        // 搜索栏
+
     },
 
     async add(req, res, next) {
@@ -127,5 +169,37 @@ export default {
         if (!result.ret) {
             location.href = 'login.html'
         }
+
+        // 渲染编辑页面
+        $.ajax({
+            url: '/api/movie/findone',
+            type: 'POST',
+            data: { _id: req.body._id },
+            success(result) {
+                res.render(movieEditView(result.data))
+                $('.movie-add-submit').attr('data-id', result.data._id)
+                    // 退出按钮
+                $('.dropdown-item').on('click', () => {
+                    res.back()
+                })
+
+                $('.movie-add-submit').on('click', (e) => {
+                    e.preventDefault()
+                    let data = $('#movie-save').serialize()
+                    $.ajax({
+                        url: '/api/movie/put',
+                        type: 'PUT',
+                        data: data + '&_id=' + $('.movie-add-submit').attr('data-id'),
+                        success(result) {
+                            if (result.ret) {
+                                res.back()
+                            } else {
+                                alert(result.data.msg)
+                            }
+                        }
+                    })
+                })
+            }
+        })
     }
 }

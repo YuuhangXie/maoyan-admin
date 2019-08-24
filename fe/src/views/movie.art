@@ -2,7 +2,7 @@
 <!-- Page Header-->
 <header class="page-header">
 <div class="container-fluid">
-    <h2 class="no-margin-bottom">Tables</h2>
+    <h2 class="no-margin-bottom">热门影片列表</h2>
 </div>
 </header>
 <!-- Breadcrumb-->
@@ -25,7 +25,7 @@
         </div>
         <div class="card-header d-flex align-items-center">
             <input type="button" value="添加" class="btn btn-success movie-add">
-            <input id="inlineFormInputGroup" type="text" placeholder="Search Film" class="mr-3 form-control">
+            <input id="inlineFormInputGroup" type="text" placeholder="Search Film" class="mr-3 form-control search-film">
         </div>
         <div class="card-body">
             <div class="table-responsive">

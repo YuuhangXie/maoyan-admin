@@ -18,6 +18,9 @@ router.use((req, res, next) => {
         .removeClass('active')
 })
 
+router.route('/', () => {})
+router.route('/movie', () => {})
+
 router.route('/', home.render)
 router.route('/movie', movie.render)
 router.route('/movieAdd', movie.add)
@@ -28,4 +31,4 @@ router.redirect('/movie')
 
 Users.init()
 
-export default router
+// export default router
