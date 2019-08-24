@@ -85,6 +85,10 @@ module.exports = {
                 })
             })
         }
+    },
+
+    async search(req, res, next) {
+
     }
 }
 

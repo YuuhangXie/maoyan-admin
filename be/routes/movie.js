@@ -13,6 +13,7 @@ router.post('/save', usersController.isSignin, movieController.save)
 router.post('/findone', usersController.isSignin, movieController.findone)
 router.put('/put', usersController.isSignin, movieController.put)
 router.delete('/delete', usersController.isSignin, movieController.delete)
+router.post('/search', usersController.isSignin, movieController.search)
 
 
 
