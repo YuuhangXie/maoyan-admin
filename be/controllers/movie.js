@@ -88,7 +88,30 @@ module.exports = {
     },
 
     async search(req, res, next) {
+        var keyword = req.body.keyword // 获取查询的字段
 
+        var _filter = {
+            $or: [ // 多字段同时匹配
+                { id: { $regex: keyword } },
+                { rt: { $regex: keyword, $options: '$i' } }, //  $options: '$i' 忽略大小写
+                { nm: { $regex: keyword, $options: '$i' } },
+                { star: { $regex: keyword, $options: '$i' } }
+            ]
+        }
+        let data = await movieListModel.search(_filter)
+        let count = await movieListModel.matchCount(_filter)
+        if (data) {
+            res.json({
+                ret: true,
+                data,
+                total: count
+            })
+        } else {
+            res.json({
+                ret: false,
+                msg: '数据拉取失败'
+            })
+        }
     }
 }
 

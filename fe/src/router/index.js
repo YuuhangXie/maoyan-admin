@@ -10,8 +10,17 @@ const router = new SMERouter('router-view', 'hash')
 
 // sme-router 中间件
 
-router.use((req, res, next) => {
-    $(`.list-unstyled li a[href="/#${req.url}"]`)
+// router.use((req, res, next) => {
+//     console.log(req.url)
+//     $(`.list-unstyled li a[href="/#${req.url}"]`)
+//         .parent()
+//         .addClass('active')
+//         .siblings()
+//         .removeClass('active')
+// })
+
+$(window).on('hashchange', () => {
+    $(`.list-unstyled li a[href="/${location.hash.slice(0,7)}"]`)
         .parent()
         .addClass('active')
         .siblings()
@@ -22,7 +31,7 @@ router.route('/', home.render)
 router.route('/movie', movie.render)
 router.route('/movieAdd', movie.add)
 router.route('/movieEdit', movie.edit)
-
+router.route('/movieSearch', movie.search)
 
 // 将页面导航到 /, 默认route方法不具备自动导航的功能
 router.redirect('/')

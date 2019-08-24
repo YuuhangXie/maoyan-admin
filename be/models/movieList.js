@@ -1,7 +1,7 @@
 const mongoose = require('../utils/db')
 
 const MovieIds = mongoose.model('movieLists', {
-    id: Number,
+    id: String,
     haspromotionTag: Boolean,
     img: String,
     version: String,
@@ -42,5 +42,13 @@ module.exports = {
 
     delete(_id) {
         return MovieIds.deleteOne({ _id: _id })
+    },
+
+    search(filter) {
+        return MovieIds.find(filter)
+    },
+
+    matchCount(filter) {
+        return MovieIds.count(filter)
     }
 }

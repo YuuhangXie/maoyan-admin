@@ -2,7 +2,7 @@ const mongoose = require('../utils/db')
 var request = require("request");
 
 const MovieIds = mongoose.model('movieLists', {
-    id: Number,
+    id: String,
     haspromotionTag: Boolean,
     img: String,
     version: String,

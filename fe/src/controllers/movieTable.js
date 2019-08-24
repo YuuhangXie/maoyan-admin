@@ -126,7 +126,13 @@ export default {
         $('.delete-btn').on('click', removeMovie.bind(this, res))
 
         // 搜索栏
-
+        $('.search-film').on('keydown', (e) => {
+            if (e.keyCode === 13) {
+                res.go('/movieSearch', {
+                    keyword: $('.search-film').val()
+                })
+            }
+        })
     },
 
     async add(req, res, next) {
@@ -198,6 +204,106 @@ export default {
                             }
                         }
                     })
+                })
+            }
+        })
+    },
+
+    async search(req, res, next) {
+        let result = await SigninController.isSignin()
+
+        // 如果没有权限，则返回登录页面
+        if (!result.ret) {
+            location.href = 'login.html'
+        }
+
+        res.render(movieView({
+            list: []
+        }))
+
+        await $.ajax({
+            url: '/api/movie/search',
+            data: {
+                keyword: req.body.keyword
+            },
+            type: 'POST',
+            success(dataList) {
+                console.log(dataList, req.body.keyword)
+
+                // 渲染第一页
+                $('#router-view tbody').html(movieListView({
+                    list: dataList.data.slice(0, 10)
+                }))
+
+                $('#page').bootstrapPaginator({
+                    bootstrapMajorVersion: 3, //bootstrap版本
+                    currentPage: 1, //当前页码
+                    totalPages: Math.ceil(dataList.total / 10), //总页数（后台传过来的数据）
+                    numberOfPages: 6, //一页显示几个按钮
+                    itemTexts: function(type, page, current) {
+                        switch (type) {
+                            case "first":
+                                return "首页";
+                            case "prev":
+                                return "上一页";
+                            case "next":
+                                return "下一页";
+                            case "last":
+                                return "末页";
+                            case "page":
+                                return page;
+                        }
+                    }, //改写分页按钮字样
+                    onPageClicked: function(event, originalEvent, type, page) {
+                        $('.checkbox-template').unbind()
+                        $('#router-view tbody').html(movieListView({
+                            list: dataList.data.slice((page - 1) * 10, page * 10)
+                        }))
+
+                        // // 每次渲染添加事件
+                        $('.movieList-btn').on('click', handleBtn.bind(this))
+                        $('.movieList-btn-all').prop('checked', false)
+                        $('.movieList-btn-all').on('click', handleBtnAll.bind(this))
+
+                        // // 点击编辑事件
+                        $('.edit-btn').on('click', function() {
+                            res.go('/movieEdit', {
+                                _id: $(this).attr('data-id')
+                            })
+                        })
+                    }
+                });
+
+                // // 每次渲染添加事件
+                $('.movieList-btn').on('click', handleBtn.bind(this))
+                $('.movieList-btn-all').prop('checked', false)
+                $('.movieList-btn-all').on('click', handleBtnAll.bind(this))
+
+                // // 点击编辑事件
+                $('.edit-btn').on('click', function() {
+                    res.go('/movieEdit', {
+                        _id: $(this).attr('data-id')
+                    })
+                })
+
+                // 全选框 / 复选框实现
+                $('.movieList-btn').on('click', handleBtn.bind(this))
+                $('.movieList-btn-all').on('click', handleBtnAll.bind(this))
+
+                // 点击删除事件
+                $('.delete-btn').on('click', removeMovie.bind(this, res))
+
+                $('.movie-add').val('返回').on('click', function() {
+                    res.back()
+                })
+
+                // 搜索栏
+                $('.search-film').on('keydown', (e) => {
+                    if (e.keyCode === 13) {
+                        res.go(`/movieSearch?_=` + Date.now(), {
+                            keyword: $('.search-film').val()
+                        })
+                    }
                 })
             }
         })
