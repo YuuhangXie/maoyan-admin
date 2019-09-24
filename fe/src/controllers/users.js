@@ -5,12 +5,15 @@ export default {
 
     btnEvent() {
         $('.logout').on('click', () => {
-            $.ajax({
-                url: '/api/users/signout',
-                success(res) {
-                    location.href = 'login.html'
-                }
-            })
+            // $.ajax({
+            //     url: '/api/users/signout',
+            //     success(res) {
+            //         location.href = 'login.html'
+            //     }
+            // })
+
+            localStorage.removeItem('x-access-token')
+            location.reload()
         })
     },
 
@@ -20,6 +23,9 @@ export default {
             data: {
                 page,
                 limit
+            },
+            headers: {
+                'x-access-token': localStorage.getItem('x-access-token')
             },
             dataType: 'JSON',
             success(res) {

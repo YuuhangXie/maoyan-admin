@@ -25,12 +25,12 @@ module.exports = {
     // webpack-dev-server的配置
     devServer: {
         contentBase: path.resolve(__dirname, '../dev'),
-        host: '10.60.15.3',
+        host: '10.60.15.19',
         port: 8080,
         // 配置接口代理
         proxy: {
             '/api': {
-                target: 'http://localhost:3000'
+                target: 'http://10.60.15.19:3000'
             }
         },
     },

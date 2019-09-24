@@ -22,7 +22,11 @@ module.exports = {
     },
 
     async save(req, res, next) {
-        let data = await movieListModel.save(req.body)
+        let data = await movieListModel.save({
+            ...req.body,
+            img: req.filename
+        })
+
         if (data) {
             res.render('succ', {
                 data: JSON.stringify({
@@ -54,7 +58,13 @@ module.exports = {
     },
 
     async put(req, res, next) {
-        let data = await movieListModel.put(req.body)
+        let info = {
+            ...req.body
+        }
+        if (req.filename) {
+            info['img'] = req.filename
+        }
+        let data = await movieListModel.put(info)
         if (data) {
             res.render('succ', {
                 data: JSON.stringify({

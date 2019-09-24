@@ -27,8 +27,11 @@ class Login {
                 username,
                 password
             },
-            success(res) {
+            success(res, textStatus, jqXHR) {
                 if (res.ret) {
+                    // 获取token，保存到localstorage
+                    let token = jqXHR.getResponseHeader('x-access-token')
+                    localStorage.setItem('x-access-token', token)
                     location.href = '/'
                 } else {
                     alert(res.data.msg)

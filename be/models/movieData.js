@@ -1,5 +1,10 @@
 const mongoose = require('../utils/db')
 var request = require("request");
+var http = require('http');
+var https = require('https');
+var fs = require('fs');
+var path = require('path')
+var querystring = require('querystring');
 
 const MovieIds = mongoose.model('movieLists', {
     id: String,
@@ -25,20 +30,16 @@ request('http://m.maoyan.com/ajax/movieOnInfoList', function(error, res, body) {
     let data = JSON.parse(res.body)
     let ids = data.movieIds
     let dataFist = data.movieList
-    dataFist.forEach((item, index) => {
-        let movieInfo = new MovieIds(item)
-        movieInfo.save()
-    })
     console.log(ids.length)
     ids.forEach((id, index) => {
         request(url + id, function(err, res) {
-            let detail = JSON.parse(res.body).coming[0]
-            let movieInfo = new MovieIds(detail)
-            movieInfo.save()
+            let movieInfo = JSON.parse(res.body).coming[0];
+            movieInfo['img'] = 'https://p0.meituan.net/50.50/' + movieInfo['img'].split('w.h/')[1];
+            movieInfo['img'] = movieInfo['img'].split('/')[5];
+            new MovieIds(movieInfo).save()
         })
     })
 });
-
 
 
 module.exports = request

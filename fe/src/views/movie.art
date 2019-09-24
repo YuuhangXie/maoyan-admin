@@ -33,6 +33,7 @@
                 <thead>
                 <tr>
                     <th><input id="checkboxCustom1" type="checkbox"  value="" class="checkbox-template movieList-btn-all"></th>
+                    <th>封面</th>
                     <th>ID</th>
                     <th>影片名称</th>
                     <th>主演</th>
@@ -44,6 +45,7 @@
                 {{each list}}
                 <tr>
                     <th scope="row"><input id="checkboxCustom1" type="checkbox" data-id="{{$value._id}}"  value="" class="checkbox-template movieList-btn"></th>
+                    <td><img src="http://10.60.15.19:3000/uploads/{{$value.img}}" width="50" height="50"/></td>
                     <td>{{$value.id}}</td>
                     <th scope="row">{{$value.nm}}</th>
                     <td>{{$value.star}}</td>

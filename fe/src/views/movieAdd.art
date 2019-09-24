@@ -26,7 +26,7 @@
             <h3 class="h4">添加影片信息</h3>
         </div>
         <div class="card-body add-movie-block">
-            <form id="movie-save">
+            <form id="movie-save" enctype="multipart/form-data">
             <div class="form-group">
                 <label class="form-control-label"><strong>影片ID</strong></label>
                 <input type="text" id="id" name="id" placeholder="影片ID" class="form-control">
@@ -39,9 +39,10 @@
                 <label class="form-control-label"><strong>主演</strong></label>
                 <input type="text" id="star" name="star" placeholder="主演" class="form-control">
             </div>
+             
             <div class="form-group">
-                <label class="form-control-label"><strong>上映日期</strong></label>
-                <input type="text" id="rt" name="rt" placeholder="上映日期" class="form-control">
+                <label class="form-control-label"><strong>影片封面</strong></label>
+                <input id="img" name="img" type="file" placeholder="请上传影片封面" accept=".jpg, .jpeg, .png, .gif" class="form-control-file">
             </div>
             <div class="form-group">       
                 <button class="btn btn-success movie-add-submit">提交</button>

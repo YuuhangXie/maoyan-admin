@@ -75,6 +75,9 @@ function removeMovie(res) {
             $.ajax({
                 url: '/api/movie/delete',
                 type: 'DELETE',
+                headers: {
+                    'x-access-token': localStorage.getItem('x-access-token')
+                },
                 data: {
                     _id: $(this).attr('data-id')
                 },
@@ -152,19 +155,26 @@ export default {
 
         $('.movie-add-submit').on('click', (e) => {
             e.preventDefault()
-            let data = $('#movie-save').serialize()
+            let data = new FormData(document.getElementById('movie-save'))
             $.ajax({
                 url: '/api/movie/save',
                 data,
                 type: 'POST',
+                headers: {
+                    'x-access-token': localStorage.getItem('x-access-token')
+                },
+                contentType: false,
+                processData: false, // 不做预处理
                 success(result) {
                     if (result.ret) {
+                        console.log(result)
                         res.back()
                     } else {
                         alert(result.data.msg)
                     }
                 }
             })
+
         })
     },
 
@@ -181,6 +191,9 @@ export default {
             url: '/api/movie/findone',
             type: 'POST',
             data: { _id: req.body._id },
+            headers: {
+                'x-access-token': localStorage.getItem('x-access-token')
+            },
             success(result) {
                 res.render(movieEditView(result.data))
                 $('.movie-add-submit').attr('data-id', result.data._id)
@@ -191,11 +204,16 @@ export default {
 
                 $('.movie-add-submit').on('click', (e) => {
                     e.preventDefault()
-                    let data = $('#movie-save').serialize()
+                    let data = new FormData(document.getElementById('movie-save'))
                     $.ajax({
                         url: '/api/movie/put',
                         type: 'PUT',
-                        data: data + '&_id=' + $('.movie-add-submit').attr('data-id'),
+                        data,
+                        headers: {
+                            'x-access-token': localStorage.getItem('x-access-token')
+                        },
+                        contentType: false,
+                        processData: false, // 不做预处理
                         success(result) {
                             if (result.ret) {
                                 res.back()
@@ -221,10 +239,14 @@ export default {
             list: []
         }))
 
+        // 搜索AJAX
         await $.ajax({
             url: '/api/movie/search',
             data: {
                 keyword: req.body.keyword
+            },
+            headers: {
+                'x-access-token': localStorage.getItem('x-access-token')
             },
             type: 'POST',
             success(dataList) {

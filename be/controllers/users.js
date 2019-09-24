@@ -1,5 +1,5 @@
 const userModel = require('../models/users')
-
+const tokenUtil = require('../utils/token')
 const tools = require('../utils/tools')
 
 module.exports = {
@@ -44,7 +44,15 @@ module.exports = {
         if (result) {
             // 等待密码和解密后的密码匹配结果
             if (await tools.compare(password, result.password)) {
-                req.session.username = username
+
+                // 生成秘钥
+                let token = tokenUtil.sign({
+                    username
+                })
+
+                // 放入头部
+                res.set('X-Access-Token', token)
+
                 res.render('succ', {
                     data: JSON.stringify({
                         msg: '用户登录成功',
@@ -69,13 +77,16 @@ module.exports = {
 
     async isSignin(req, res, next) {
         res.set('content-type', 'application/json;charset=utf-8')
-        let username = req.session.username
-        if (username) {
+
+        // 获取并验证token
+        let token = req.get('x-access-token')
+        let result = await tokenUtil.verify(token)
+        if (result) {
             if (req.url === '/isSignin') {
                 res.render('succ', {
                     data: JSON.stringify({
                         msg: '用户有权限',
-                        username
+                        username: result.username
                     })
                 })
             } else {
